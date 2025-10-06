@@ -1,6 +1,6 @@
 "use client"
 
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
 import { useState, useEffect } from "react"
 import Image from "next/image"
 
@@ -24,7 +24,6 @@ export function Footer() {
   }, [])
 
   const leagues = [
-    { id: "premier-league", name: "Premier League" },
     { id: "laliga", name: "LaLiga" },
     { id: "bundesliga", name: "Bundesliga" },
     { id: "seriea", name: "Serie A" },
