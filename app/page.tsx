@@ -11,15 +11,24 @@ export const revalidate = 0
 export default async function Home() {
   console.log("[v0] Page rendering started")
 
-  const [heroPosts, laligaPosts, bundesligaPosts, serieAPosts, ligue1Posts] = await Promise.all([
+  // Only request categories that actually exist on WordPress
+  const [heroPosts, laligaPosts, bundesligaPosts, serieAPosts] = await Promise.all([
     fetchWordPressPosts(4),
     fetchWordPressPostsByCategory("laliga", 3),
     fetchWordPressPostsByCategory("bundesliga", 3),
     fetchWordPressPostsByCategory("serie-a", 3),
-    fetchWordPressPostsByCategory("ligue-1", 3),
   ])
 
-  console.log("[v0] Data fetched - Hero:", heroPosts?.length || 0, "LaLiga:", laligaPosts?.length || 0)
+  console.log(
+    "[v0] Data fetched - Hero:",
+    heroPosts?.length || 0,
+    "LaLiga:",
+    laligaPosts?.length || 0,
+    "Bundesliga:",
+    bundesligaPosts?.length || 0,
+    "Serie A:",
+    serieAPosts?.length || 0
+  )
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -30,7 +39,6 @@ export default async function Home() {
           <NewsSection title="LaLiga" league="laliga" flagCode="es" initialPosts={laligaPosts || []} />
           <NewsSection title="Bundesliga" league="bundesliga" flagCode="de" initialPosts={bundesligaPosts || []} />
           <NewsSection title="Serie A" league="serie-a" flagCode="it" initialPosts={serieAPosts || []} />
-          <NewsSection title="Ligue 1" league="ligue-1" flagCode="fr" initialPosts={ligue1Posts || []} />
         </div>
       </main>
       <Footer />
