@@ -1,13 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
+  async redirects() {
+    return [
+      {
+        source: "/post/:slug*",
+        destination: "https://blog.footmundo.co.uk/post/:slug*",
+        permanent: true,
+      },
+      {
+        source: "/blog/:slug*",
+        destination: "https://blog.footmundo.co.uk/:slug*",
+        permanent: true,
+      },
+    ]
   },
 }
 
