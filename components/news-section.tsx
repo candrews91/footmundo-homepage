@@ -55,12 +55,14 @@ export function NewsSection({ title, league, flagCode, initialPosts }: NewsSecti
     )
   }
 
+  // ✅ Fixed: use internal post slug routes
   const posts = initialPosts.slice(0, 3).map((post) => ({
     title: stripHtmlTags(post.title.rendered),
     excerpt: stripHtmlTags(post.excerpt.rendered),
     image: post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/football-news-headline.png",
     time: getTimeAgo(post.date),
-    link: `https://footmundo.co.uk/?p=${post.id}`,
+    slug: post.slug,
+    link: `/post/${post.slug}`,
   }))
 
   return (
@@ -80,7 +82,7 @@ export function NewsSection({ title, league, flagCode, initialPosts }: NewsSecti
 
       <div className="grid gap-6 md:grid-cols-3">
         {posts.map((post, index) => (
-          <a key={index} href={post.link} target="_blank" rel="noopener noreferrer" className="group">
+          <a key={index} href={post.link} className="group">
             <Card className="overflow-hidden border-2 hover:border-primary transition-colors h-full">
               <CardHeader className="p-0">
                 <div className="relative aspect-video overflow-hidden bg-muted">
