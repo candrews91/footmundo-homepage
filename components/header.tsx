@@ -1,13 +1,12 @@
 "use client"
 
-import { Moon, Sun, Menu } from "lucide-react"
+import { Moon, Sun, Menu } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
+import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
 
 const leagues = [
-  { id: "premier-league", name: "Premier League", flagCode: "gb-eng" },
   { id: "laliga", name: "LaLiga", flagCode: "es" },
   { id: "bundesliga", name: "Bundesliga", flagCode: "de" },
   { id: "seriea", name: "Serie A", flagCode: "it" },
@@ -99,22 +98,24 @@ export function Header() {
             />
           </a>
 
-          <nav className="hidden lg:flex items-center gap-4 flex-1 justify-center overflow-x-auto">
+          <nav className="hidden lg:flex items-center gap-3 flex-1 justify-center overflow-x-auto">
             {leagues.map((league) => (
               <a
                 key={league.id}
                 href={`#${league.id}`}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap flex items-center gap-1.5"
+                className="group flex flex-col items-center gap-1.5 transition-transform hover:scale-105"
+                title={league.name}
               >
-                <img
-                  src={`https://flagcdn.com/16x12/${league.flagCode}.png`}
-                  srcSet={`https://flagcdn.com/32x24/${league.flagCode}.png 2x, https://flagcdn.com/48x36/${league.flagCode}.png 3x`}
-                  width="16"
-                  height="12"
-                  alt={`${league.name} flag`}
-                  className="inline-block"
-                />
-                {league.name}
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-border shadow-md hover:shadow-lg transition-shadow bg-muted">
+                  <img
+                    src={`https://flagcdn.com/w80/${league.flagCode}.png`}
+                    alt={`${league.name} flag`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                  {league.name}
+                </span>
               </a>
             ))}
           </nav>
