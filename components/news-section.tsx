@@ -15,7 +15,7 @@ const leagueColors: Record<string, string> = {
   bundesliga: "bg-red-600",
   "serie-a": "bg-green-600",
   "ligue-1": "bg-blue-600",
-  "premier-league": "bg-red-600",
+  "premier-league": "bg-purple-600",
   eredivisie: "bg-orange-500",
   "liga-portugal": "bg-red-600",
 }
@@ -25,7 +25,7 @@ const leagueTextColors: Record<string, string> = {
   bundesliga: "text-red-600 hover:text-red-700",
   "serie-a": "text-green-600 hover:text-green-700",
   "ligue-1": "text-blue-600 hover:text-blue-700",
-  "premier-league": "text-red-600 hover:text-red-700",
+  "premier-league": "text-purple-600 hover:text-purple-700",
   eredivisie: "text-orange-600 hover:text-orange-700",
   "liga-portugal": "text-red-600 hover:text-red-700",
 }
@@ -55,14 +55,13 @@ export function NewsSection({ title, league, flagCode, initialPosts }: NewsSecti
     )
   }
 
-  // ✅ Fixed: use internal post slug routes
+  // ✅ Use the canonical post link from WordPress API
   const posts = initialPosts.slice(0, 3).map((post) => ({
     title: stripHtmlTags(post.title.rendered),
     excerpt: stripHtmlTags(post.excerpt.rendered),
     image: post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/football-news-headline.png",
     time: getTimeAgo(post.date),
-    slug: post.slug,
-    link: `/post/${post.slug}`,
+    link: post.link, // <-- updated to use WordPress URL
   }))
 
   return (
@@ -82,7 +81,7 @@ export function NewsSection({ title, league, flagCode, initialPosts }: NewsSecti
 
       <div className="grid gap-6 md:grid-cols-3">
         {posts.map((post, index) => (
-          <a key={index} href={post.link} className="group">
+          <a key={index} href={post.link} target="_blank" rel="noopener noreferrer" className="group">
             <Card className="overflow-hidden border-2 hover:border-primary transition-colors h-full">
               <CardHeader className="p-0">
                 <div className="relative aspect-video overflow-hidden bg-muted">
